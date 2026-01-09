@@ -165,7 +165,7 @@ router.post("/forgot-password", async (req, res) => {
       from: `"網站客服" <${process.env.EMAIL_USER}>`,
       to: user.email,
       subject: "重設您的密碼",
-      text: `請點擊連結重設密碼：http://localhost:5173/reset-password/${token}`,
+      text: `請點擊連結重設密碼：https://maybeige-frontend.onrender.com/reset-password/${token}`,
     };
     await transporter.sendMail(mailOptions);
     res.json({ success: true, message: "郵件已發送。" });
