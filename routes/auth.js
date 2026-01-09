@@ -22,12 +22,14 @@ router.get(
         expiresIn: "3d",
       });
       res.redirect(
-        `http://localhost:5173/google-success?token=${encodeURIComponent(
+        `https://maybeige-frontend.onrender.com/google-success?token=${encodeURIComponent(
           "JWT " + token
         )}&email=${encodeURIComponent(user.email)}`
       );
     } catch (err) {
-      res.redirect("http://localhost:5173/login?error=google_failed");
+      res.redirect(
+        "https://maybeige-frontend.onrender.com/login?error=google_failed"
+      );
     }
   }
 );
