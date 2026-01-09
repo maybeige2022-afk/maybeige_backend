@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const path = require("path");
 dotenv.config();
+
 const authRoute = require("./routes").auth;
 const orderRoute = require("./routes").order;
 const productRoute = require("./routes/product-route");
@@ -20,6 +22,9 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
+// API
 app.use("/api/user", authRoute);
 app.use(
   "/api/orders",
@@ -27,8 +32,8 @@ app.use(
   orderRoute
 );
 app.use("/api/product", productRoute);
-app.use(express.static("public"));
 
-app.listen(8080, () => {
-  console.log("Server running on port 8080.");
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}.`);
 });
