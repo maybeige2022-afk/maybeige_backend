@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 // API
-app.use("/auth", authRoute);
+app.use("/api/user", authRoute);
 app.use(
   "/api/orders",
   passport.authenticate("jwt", { session: false }),
