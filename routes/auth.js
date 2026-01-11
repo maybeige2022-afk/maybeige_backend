@@ -13,7 +13,10 @@ router.get(
 );
 router.get(
   "/google/callback",
-  passport.authenticate("google", { session: false }),
+  passport.authenticate("google", {
+    session: false,
+    callbackURL: "https://maybeige-api.onrender.com/api/user/google/callback",
+  }),
   async (req, res) => {
     try {
       const user = req.user;
