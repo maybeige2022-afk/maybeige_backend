@@ -25,8 +25,7 @@ module.exports = (passport) => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL:
-          "https://maybeige-api.onrender.com/api/user/google/callback",
+        callbackURL: "http://localhost:8080/api/user/google/callback",
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

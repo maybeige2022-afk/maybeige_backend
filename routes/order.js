@@ -2,6 +2,21 @@ const router = require("express").Router();
 const Order = require("../models/order-model");
 const User = require("../models/user-model");
 
+router.get("/all-orders", async (req, res) => {
+  try {
+    if (!req.user || req.user.role !== "admin") {
+      return res.status(403).json({ message: "權限不足，僅限管理員存取" });
+    }
+
+    const allOrders = await Order.find({}).sort({ date: -1 });
+
+    res.json(allOrders);
+  } catch (err) {
+    console.error("抓取全站訂單失敗:", err.message);
+    res.status(500).json({ message: "系統錯誤", error: err.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   if (!req.user) {
     return res.status(401).json({ message: "請先登入後再下單" });
