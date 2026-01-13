@@ -27,7 +27,9 @@ router.get(
       res.redirect(
         `https://maybeige-frontend.onrender.com/google-success?token=${encodeURIComponent(
           "JWT " + token
-        )}&email=${encodeURIComponent(user.email)}`
+        )}&email=${encodeURIComponent(user.email)}&role=${encodeURIComponent(
+          user.role
+        )}`
       );
     } catch (err) {
       res.redirect(
