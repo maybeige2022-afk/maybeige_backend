@@ -3,6 +3,9 @@ const Order = require("../models/order-model");
 const User = require("../models/user-model");
 
 router.get("/all-orders", async (req, res) => {
+  console.log("--- Admin Access Debug ---");
+  console.log("Request User:", req.user);
+  console.log("Request Headers Auth:", req.headers.authorization);
   try {
     if (
       !req.user ||
