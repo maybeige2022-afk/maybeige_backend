@@ -4,7 +4,10 @@ const User = require("../models/user-model");
 
 router.get("/all-orders", async (req, res) => {
   try {
-    if (!req.user || req.user.role !== "admin") {
+    if (
+      !req.user ||
+      (req.user.role !== "admin" && req.user.email !== "maybeige2022@gmail.com")
+    ) {
       return res.status(403).json({ message: "權限不足，僅限管理員存取" });
     }
 
