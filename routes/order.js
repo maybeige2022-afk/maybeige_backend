@@ -3,9 +3,6 @@ const Order = require("../models/order-model");
 const User = require("../models/user-model");
 
 router.get("/all-orders", async (req, res) => {
-  console.log("--- Admin Access Debug ---");
-  console.log("Request User:", req.user);
-  console.log("Request Headers Auth:", req.headers.authorization);
   try {
     if (
       !req.user ||
@@ -37,6 +34,7 @@ router.post("/", async (req, res) => {
       discount,
       paymentMethod,
       couponCode,
+      invoice,
     } = req.body;
 
     if (!recipient || !products) {
@@ -56,6 +54,7 @@ router.post("/", async (req, res) => {
       shippingFee: Number(shippingFee) || 0,
       discount: Number(discount) || 0,
       paymentMethod,
+      invoice: invoice,
       status: "處理中",
     });
 

@@ -28,6 +28,13 @@ const orderSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+
+  invoice: {
+    type: { type: String },
+    carrier: { type: String },
+    vatNumber: { type: String },
+    donationCode: { type: String },
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);
