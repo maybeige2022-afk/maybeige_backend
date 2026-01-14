@@ -15,7 +15,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    callbackURL: "https://maybeige-api.onrender.com/api/user/google/callback",
+    callbackURL: process.env.GOOGLE_CALLBACK_URL,
   }),
   async (req, res) => {
     try {
@@ -25,16 +25,14 @@ router.get(
         expiresIn: "3d",
       });
       res.redirect(
-        `https://maybeige-frontend.onrender.com/google-success?token=${encodeURIComponent(
+        `${process.env.FRONTEND_URL}/google-success?token=${encodeURIComponent(
           "JWT " + token
         )}&email=${encodeURIComponent(user.email)}&role=${encodeURIComponent(
           user.role
         )}`
       );
     } catch (err) {
-      res.redirect(
-        "https://maybeige-frontend.onrender.com/login?error=google_failed"
-      );
+      res.redirect(`${process.env.FRONTEND_URL}/login?error=google_failed`);
     }
   }
 );
@@ -171,7 +169,7 @@ router.post("/forgot-password", async (req, res) => {
       to: user.email,
       subject: "重設您的密碼",
 
-      text: `請點擊連結重設密碼：https://maybeige-frontend.onrender.com/reset-password/${token}`,
+      text: `請點擊連結重設密碼：${process.env.FRONTEND_URL}/reset-password/${token}`,
     };
     await transporter.sendMail(mailOptions);
     res.json({ success: true, message: "郵件已發送。" });

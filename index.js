@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://maybeige-frontend.onrender.com",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
