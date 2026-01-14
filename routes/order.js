@@ -85,4 +85,35 @@ router.get("/my-orders", async (req, res) => {
   }
 });
 
+router.patch("/:id/status", async (req, res) => {
+  if (
+    !req.user ||
+    (req.user.role !== "admin" && req.user.email !== "maybeige2022@gmail.com")
+  ) {
+    return res.status(403).json({ message: "權限不足" });
+  }
+
+  try {
+    const { status } = req.body;
+    const validStatuses = ["處理中", "運送中", "已完成", "已取消"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "無效的訂單狀態" });
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      { status: status },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: "找不到該筆訂單" });
+    }
+
+    res.json(updatedOrder);
+  } catch (err) {
+    res.status(500).json({ message: "伺服器錯誤，更新失敗" });
+  }
+});
+
 module.exports = router;
