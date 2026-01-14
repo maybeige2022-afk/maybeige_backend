@@ -4,10 +4,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path = require("path");
 dotenv.config();
+const { auth, order, product } = require("./routes");
 
-const authRoute = require("./routes").auth;
-const orderRoute = require("./routes").order;
-const productRoute = require("./routes/product-route");
 const passport = require("passport");
 require("./config/passport")(passport);
 const cors = require("cors");
@@ -31,13 +29,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 // API
-app.use("/api/user", authRoute);
-app.use(
-  "/api/orders",
-  passport.authenticate("jwt", { session: false }),
-  orderRoute
-);
-app.use("/api/product", productRoute);
+app.use("/api/user", auth);
+app.use("/api/orders", passport.authenticate("jwt", { session: false }), order);
+app.use("/api/product", product);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

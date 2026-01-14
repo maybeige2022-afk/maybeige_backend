@@ -1,4 +1,5 @@
 module.exports = {
-  userModel: require("./user-model"),
-  orderModel: require("./order-model"),
+  userModel: require("./User"),
+  orderModel: require("./Order"),
+  productModel: require("./Product"),
 };
