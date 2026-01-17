@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { orderModel: Order, userModel: User } = require("../models");
 
+// admin
 router.get("/all-orders", async (req, res) => {
   try {
     if (
@@ -19,6 +20,7 @@ router.get("/all-orders", async (req, res) => {
   }
 });
 
+// order
 router.post("/", async (req, res) => {
   if (!req.user) {
     return res.status(401).json({ message: "請先登入後再下單" });
@@ -59,6 +61,7 @@ router.post("/", async (req, res) => {
 
     const savedOrder = await newOrder.save();
 
+    // coupon
     if (discount > 0 && couponCode === "MERRY CHRISTMAS") {
       await User.findByIdAndUpdate(req.user._id, {
         $addToSet: { usedCoupons: "MERRY CHRISTMAS" },
@@ -75,6 +78,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// myaccount order
 router.get("/my-orders", async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id }).sort({ date: -1 });
@@ -84,6 +88,7 @@ router.get("/my-orders", async (req, res) => {
   }
 });
 
+// update order status
 router.patch("/:id/status", async (req, res) => {
   if (
     !req.user ||

@@ -2,10 +2,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const path = require("path");
 dotenv.config();
+const path = require("path");
 const { auth, order, product } = require("./routes");
-
 const passport = require("passport");
 require("./config/passport")(passport);
 const cors = require("cors");
@@ -35,5 +34,5 @@ app.use("/api/product", product);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`Server running on port ${port}.`);
+  console.log(`Server is running on port ${port}.`);
 });

@@ -138,6 +138,7 @@ router.patch(
   }
 );
 
+// myAccount
 router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
@@ -150,6 +151,7 @@ router.get(
   }
 );
 
+// reset password
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
   try {
@@ -168,7 +170,6 @@ router.post("/forgot-password", async (req, res) => {
       from: `"網站客服" <${process.env.EMAIL_USER}>`,
       to: user.email,
       subject: "重設您的密碼",
-
       text: `請點擊連結重設密碼：${process.env.FRONTEND_URL}/reset-password/${token}`,
     };
     await transporter.sendMail(mailOptions);

@@ -10,15 +10,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/add", async (req, res) => {
-  const { name, tags, price, img, category } = req.body;
-  const newProduct = new Product({ name, tags, price, img, category });
-  try {
-    const savedProduct = await newProduct.save();
-    res.json(savedProduct);
-  } catch (err) {
-    res.status(400).json({ message: "新增商品失敗", error: err });
+router.post(
+  "/add",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { name, tags, price, img, category } = req.body;
+    const newProduct = new Product({ name, tags, price, img, category });
+    try {
+      const savedProduct = await newProduct.save();
+      res.json(savedProduct);
+    } catch (err) {
+      res.status(400).json({ message: "新增商品失敗", error: err });
+    }
   }
-});
+);
 
 module.exports = router;
